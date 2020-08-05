@@ -1,0 +1,49 @@
+﻿@model IEnumerable<Mvc_Bo.Models.Aluno>
+
+@{
+    // Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Lista</title>
+</head>
+<body>
+    <h1> Lista de alunos</h1>
+    <hr />
+    <p>
+        <a asp-action="Create">Criar novo</a>
+    </p>
+    <table class="table" border="1">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Id)</th>
+                <th>@Html.DisplayNameFor(model => model.Nome)</th>
+                <th>@Html.DisplayNameFor(model => model.Sexo)</th>
+                <th>@Html.DisplayNameFor(model => model.Email)</th>
+                <th>@Html.DisplayNameFor(model => model.Nascimento)</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Id)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Nome)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Sexo)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Nascimento)</td>
+                    <td>
+                        @Html.ActionLink("Editar", "Edit", new { /*id=item.PrimaryKey*/ })
+                        @Html.ActionLink("Detalhes", "Detalhes", new { /*id=item.PrimaryKey*/ })
+                        @Html.ActionLink("Delete", "Delete", new { /*id=item.PrimaryKey*/ })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>

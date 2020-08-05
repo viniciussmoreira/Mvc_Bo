@@ -1,0 +1,48 @@
+﻿@model IEnumerable<Mvc_Bo.Models.Moto>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ListaMotos</title>
+</head>
+<body>
+    <h1> Lista de motos</h1>
+    <hr />
+    <p>
+        <a asp-action="Create">Criar novo</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Id)</th>
+                <th>@Html.DisplayNameFor(model => model.Nome)</th>
+                <th>@Html.DisplayNameFor(model => model.Cor)</th>
+                <th>@Html.DisplayNameFor(model => model.Cilindrada)</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>@Html.DisplayFor(modelitem => item.Id)</td>
+                <td>@Html.DisplayFor(modelitem => item.Nome)</td>
+                <td>@Html.DisplayFor(modelitem => item.Cor)</td>
+                <td>@Html.DisplayFor(modelitem => item.Cilindrada)</td>
+
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>

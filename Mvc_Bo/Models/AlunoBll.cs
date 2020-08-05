@@ -30,11 +30,11 @@ namespace Mvc_Bo.Models
                     while (rdr.Read())
                     {
                         Aluno aluno = new Aluno();
-                        aluno.Id = Convert.ToInt32("Id");
+                        aluno.Id = Convert.ToInt32(rdr["Id"]);
                         aluno.Nome = rdr["Nome"].ToString();
                         aluno.Sexo = rdr["Sexo"].ToString();
                         aluno.Email = rdr["Email"].ToString();
-                        aluno.Nascimento = Convert.ToDateTime(rdr["Nascimento"]);                        
+                        aluno.Nascimento = Convert.ToDateTime(rdr["Nascimento"]);
                         alunos.Add(aluno);
                     }
 
@@ -47,6 +47,48 @@ namespace Mvc_Bo.Models
                 throw;
             }
 
+        }
+
+        public void IncluirAluno(Aluno aluno)
+        {
+            var configuration = ConfigurationHelper.GetConfiguration(Directory.GetCurrentDirectory());
+            var conexao = configuration.GetConnectionString("DefaultConnection");
+            try
+            {
+                using (SqlConnection con = new SqlConnection(conexao))
+                {
+                    SqlCommand cmd = new SqlCommand("IncluirAlunos", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    SqlParameter paramNome = new SqlParameter();
+                    paramNome.ParameterName = "@nome";
+                    paramNome.Value = aluno.Nome;
+                    cmd.Parameters.Add(paramNome);
+
+                    SqlParameter paramSexo = new SqlParameter();
+                    paramSexo.ParameterName = "@sexo";
+                    paramSexo.Value = aluno.Sexo;
+                    cmd.Parameters.Add(paramSexo);
+
+                    SqlParameter paramEmail = new SqlParameter();
+                    paramEmail.ParameterName = "@email";
+                    paramEmail.Value = aluno.Email;
+                    cmd.Parameters.Add(paramEmail);
+
+                    SqlParameter paramNascimento = new SqlParameter();
+                    paramNascimento.ParameterName = "@nascimento";
+                    paramNascimento.Value = aluno.Nascimento;
+                    cmd.Parameters.Add(paramNascimento);
+
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
     }
 }
