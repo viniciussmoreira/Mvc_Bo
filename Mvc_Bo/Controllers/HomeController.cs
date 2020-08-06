@@ -61,7 +61,20 @@ namespace Mvc_Bo.Controllers
                 return RedirectToAction("Index");
             }
 
+        }
 
+        public IActionResult CreateMotos()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult CreateMotos(Moto moto)
+        {
+            MotoBll _moto = new MotoBll();
+            _moto.IncluirMoto(moto);
+
+            return View("Privacy");
         }
 
         public IActionResult Privacy()
