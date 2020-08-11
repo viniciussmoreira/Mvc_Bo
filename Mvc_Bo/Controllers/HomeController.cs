@@ -38,17 +38,17 @@ namespace Mvc_Bo.Controllers
         [HttpPost]
         public IActionResult Create(Aluno aluno)
         {
-            if (string.IsNullOrEmpty(aluno.Nome))
-                ModelState.AddModelError("Nome", "Nome é obrigatório");
+            //if (string.IsNullOrEmpty(aluno.Nome))
+            //    ModelState.AddModelError("Nome", "Nome é obrigatório");
 
-            if (string.IsNullOrEmpty(aluno.Sexo))
-                ModelState.AddModelError("Sexo", "Sexo é obrigatório");
+            //if (string.IsNullOrEmpty(aluno.Sexo))
+            //    ModelState.AddModelError("Sexo", "Sexo é obrigatório");
 
-            if (string.IsNullOrEmpty(aluno.Email))
-                ModelState.AddModelError("Email é obrigatório", "Email é obrigatório");
+            //if (string.IsNullOrEmpty(aluno.Email))
+            //    ModelState.AddModelError("Email é obrigatório", "Email é obrigatório");
 
-            if (aluno.Nascimento <= DateTime.Now.AddYears(-18))
-                ModelState.AddModelError("Nascimento", "Data de nascimento inválida");
+            //if (aluno.Nascimento <= DateTime.Now.AddYears(-18))
+            //    ModelState.AddModelError("Nascimento", "Data de nascimento inválida");
 
             if (!ModelState.IsValid)
             {
@@ -71,10 +71,26 @@ namespace Mvc_Bo.Controllers
         [HttpPost]
         public IActionResult CreateMotos(Moto moto)
         {
-            MotoBll _moto = new MotoBll();
-            _moto.IncluirMoto(moto);
+            if (string.IsNullOrEmpty(moto.Nome))
+                ModelState.AddModelError("Nome", "Nome é obrigatório");
 
-            return View("Privacy");
+            if (string.IsNullOrEmpty(moto.Cor))
+                ModelState.AddModelError("Cor", "Cor é obrigatório");
+
+            if (moto.Cilindrada <= 0)
+                ModelState.AddModelError("Cilindrada", "Insira a Cilindrada");
+
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+            else
+            {
+                MotoBll _moto = new MotoBll();
+                _moto.IncluirMoto(moto);
+
+                return RedirectToAction("Privacy");
+            }
         }
 
         public IActionResult Privacy()
