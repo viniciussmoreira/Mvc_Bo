@@ -12,19 +12,16 @@ namespace Mvc_Bo.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private IAlunoBll alunoBll;
+        public HomeController(IAlunoBll _alunoBll)
         {
-
-
-            _logger = logger;
+            alunoBll = _alunoBll;
         }
 
         public IActionResult Index()
         {
-            AlunoBll _aluno = new AlunoBll();
-            List<Aluno> alunos = _aluno.GetAlunos().ToList();
+            //AlunoBll _aluno = new AlunoBll();
+            List<Aluno> alunos = alunoBll.GetAlunos().ToList();
             return View("Lista", alunos);
         }
 
@@ -63,6 +60,29 @@ namespace Mvc_Bo.Controllers
 
         }
 
+        public IActionResult Edit(int id)
+        {
+
+            Aluno aluno = alunoBll.GetAlunos().Single(x => x.Id == id);
+            return View(aluno);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(Aluno aluno)
+        {
+            //public IActionResult Edit([Bind(nameof(Aluno.Id),nameof(Aluno.Sexo),nameof(Aluno.Email),nameof(Aluno.Nascimento))]Aluno aluno)
+            //Não vem o Aluno.nome no bind, mas posso contornar
+            //aluno.Nome = alunoBll.GetAlunos().Single(a => a.Id == aluno.Id).Nome;//Injeção de dependencia
+
+            if (ModelState.IsValid)
+            {
+                //AlunoBll _alunobll = new AlunoBll();
+                alunoBll.AtualizarAluno(aluno);
+
+                return RedirectToAction("Index");
+            }
+            return View(aluno);
+        }
         public IActionResult CreateMotos()
         {
             return View();

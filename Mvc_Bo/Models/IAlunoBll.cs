@@ -6,5 +6,6 @@ namespace Mvc_Bo.Models
     {
         List<Aluno> GetAlunos();
         void IncluirAluno(Aluno aluno);
+        void AtualizarAluno(Aluno aluno);
     }
 }

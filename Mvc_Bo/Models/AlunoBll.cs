@@ -12,6 +12,53 @@ namespace Mvc_Bo.Models
 {
     public class AlunoBll : IAlunoBll
     {
+        public void AtualizarAluno(Aluno aluno)
+        {
+            var configuration = ConfigurationHelper.GetConfiguration(Directory.GetCurrentDirectory());
+            var conexao = configuration.GetConnectionString("DefaultConnection");
+            try
+            {
+                using (SqlConnection con = new SqlConnection(conexao))
+                {
+                    SqlCommand cmd = new SqlCommand("AtualizarAluno", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    SqlParameter paramId = new SqlParameter();
+                    paramId.ParameterName = "@Id";
+                    paramId.Value = aluno.Id;
+                    cmd.Parameters.Add(paramId);
+
+                    SqlParameter paramNome = new SqlParameter();
+                    paramNome.ParameterName = "@Nome";
+                    paramNome.Value = aluno.Nome;
+                    cmd.Parameters.Add(paramNome);
+
+                    SqlParameter paramSexo = new SqlParameter();
+                    paramSexo.ParameterName = "@Sexo";
+                    paramSexo.Value = aluno.Sexo;
+                    cmd.Parameters.Add(paramSexo);
+
+                    SqlParameter paramEmail = new SqlParameter();
+                    paramEmail.ParameterName = "@Email";
+                    paramEmail.Value = aluno.Email;
+                    cmd.Parameters.Add(paramEmail);
+
+                    SqlParameter paramNascimento = new SqlParameter();
+                    paramNascimento.ParameterName = "@Nascimento";
+                    paramNascimento.Value = aluno.Nascimento;
+                    cmd.Parameters.Add(paramNascimento);
+
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public List<Aluno> GetAlunos()
         {
             var configuration = ConfigurationHelper.GetConfiguration(Directory.GetCurrentDirectory());
