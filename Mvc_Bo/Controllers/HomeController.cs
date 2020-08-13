@@ -83,6 +83,23 @@ namespace Mvc_Bo.Controllers
             }
             return View(aluno);
         }
+
+
+
+        public IActionResult Delete(int id)
+        {
+            
+            Aluno aluno = alunoBll.GetAlunos().Single(a => a.Id == id);
+            return View(aluno);
+        }
+
+        [HttpPost]
+        public IActionResult Delete(Aluno aluno)
+        {
+            alunoBll.DeletarAluno(aluno.Id);
+            return RedirectToAction("Index");
+        }
+
         public IActionResult CreateMotos()
         {
             return View();

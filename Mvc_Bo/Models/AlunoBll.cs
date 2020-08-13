@@ -59,6 +59,34 @@ namespace Mvc_Bo.Models
             }
         }
 
+        public void DeletarAluno(int Id)
+        {
+            var configuration = ConfigurationHelper.GetConfiguration(Directory.GetCurrentDirectory());
+            var conexao = configuration.GetConnectionString("DefaultConnection");
+            try
+            {
+                using (SqlConnection con = new SqlConnection(conexao))
+                {
+                    SqlCommand cmd = new SqlCommand("DeletarAluno", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    SqlParameter paramId = new SqlParameter();
+                    paramId.ParameterName = "@Id";
+                    paramId.Value = Id;
+                    cmd.Parameters.Add(paramId);
+
+
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public List<Aluno> GetAlunos()
         {
             var configuration = ConfigurationHelper.GetConfiguration(Directory.GetCurrentDirectory());
