@@ -100,6 +100,12 @@ namespace Mvc_Bo.Controllers
             return RedirectToAction("Index");
         }
 
+        public IActionResult Details(int id)
+        {
+            Aluno aluno = alunoBll.GetAlunos().Single(a => a.Id == id);
+            return View(aluno);
+        }
+
         public IActionResult CreateMotos()
         {
             return View();
