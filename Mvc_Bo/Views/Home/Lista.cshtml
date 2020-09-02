@@ -30,18 +30,22 @@
         <tbody>
             @foreach (var item in Model)
             {
-                <tr>
-                    <td>@Html.DisplayFor(modelItem => item.Id)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Nome)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Sexo)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Email)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Nascimento)</td>
-                    <td>
-                        @Html.ActionLink("Editar", "Edit", new { id=item.Id })
-                        @Html.ActionLink("Detalhes", "Detalhes", new { /*id=item.PrimaryKey*/ })
-                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-                    </td>
-                </tr>
+                using (Html.BeginForm("Delete", "Home", new { id = item.Id }))
+                {
+                    <tr>
+                        <td> @Html.DisplayFor(modelItem => item.Id) </td>
+                        <td> @Html.DisplayFor(modelItem => item.Nome) </td>
+                        <td> @Html.DisplayFor(modelItem => item.Sexo) </td>
+                        <td> @Html.DisplayFor(modelItem => item.Email) </td>
+                        <td> @Html.DisplayFor(modelItem => item.Nascimento) </td>
+                        <td>
+                            @Html.ActionLink("Editar", "Edit", new { id = item.Id })
+                            @Html.ActionLink("Detalhes", "Detalhes", new { /*id=item.PrimaryKey*/ })
+                            @*@Html.ActionLink("Delete", "Delete", new { id = item.Id })*@
+                            <input type="submit" value="Deletar" onclick="return confirm('Confirma a exclusão do aluno @item.Nome');" />
+                        </td>
+                    </tr>
+                }
             }
         </tbody>
     </table>
